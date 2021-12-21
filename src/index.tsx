@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 
 import { ThemeProvider } from "styled-components";
-import { darkTheme } from "./theme";
+import { darkTheme, lightTheme } from "./theme";
 import { RecoilRoot } from "recoil";
 
 import { createGlobalStyle } from "styled-components";
@@ -65,7 +65,7 @@ body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
   background-color:${(props) => props.theme.bgColor};
-  color:${(props) => props.theme.textColor};
+  color:black;
   line-height: 1.2;
 }
 a {
@@ -77,7 +77,7 @@ a {
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <App />
       </ThemeProvider>
