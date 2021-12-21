@@ -1,12 +1,8 @@
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
+import DragableCard from "./Components/DragableCard";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,15 +28,6 @@ const Board = styled.div`
   min-height: min-content;
 `;
 
-const Card = styled.div`
-  border-radius: 0.5rem;
-  margin-bottom: 0.7rem;
-  padding: 0.8rem 0.8rem;
-  background-color: ${(props) => props.theme.cardColor};
-`;
-
-const toDos = ["a", "b", "c", "d", "e", "f"];
-
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
@@ -48,15 +35,13 @@ function App() {
     setToDos((oldToDos) => {
       const toDosCopy = [...oldToDos];
       // 1) Delete item on source.index
-      console.log("Delete item on", source.index);
-      console.log(toDosCopy);
+
       toDosCopy.splice(source.index, 1);
-      console.log("Deleted item");
-      console.log(toDosCopy);
+
       // 2) Put back the item on the destination.index
-      console.log("Put back", draggableId, "on ", destination.index);
+
       toDosCopy.splice(destination?.index, 0, draggableId);
-      console.log(toDosCopy);
+
       return toDosCopy;
     });
   };
@@ -69,17 +54,7 @@ function App() {
             {(magic) => (
               <Board ref={magic.innerRef} {...magic.droppableProps}>
                 {toDos.map((toDo, index) => (
-                  <Draggable key={toDo} draggableId={toDo} index={index}>
-                    {(magic) => (
-                      <Card
-                        ref={magic.innerRef}
-                        {...magic.dragHandleProps}
-                        {...magic.draggableProps}
-                      >
-                        {toDo}
-                      </Card>
-                    )}
-                  </Draggable>
+                  <DragableCard key={toDo} index={index} toDo={toDo} />
                 ))}
                 {magic.placeholder}
               </Board>
