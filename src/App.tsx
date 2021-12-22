@@ -20,6 +20,8 @@ const Boards = styled.div`
   width: 100%;
   gap: 1rem;
   grid-template-columns: repeat(3, 1fr);
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 `;
 
 function App() {
