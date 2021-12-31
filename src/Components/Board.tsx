@@ -39,8 +39,28 @@ const Area = styled.div<AreaInterface>`
 
 const Form = styled.form`
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.cardColor};
+
   input {
-    width: 100%;
+    color: #5d5d5d;
+    font-size: 1rem;
+    background-color: transparent;
+    padding: 0.5rem;
+    border: none;
+    margin-right: 1rem;
+
+    &:focus {
+      outline: none;
+    }
+    ::-webkit-input-placeholder {
+      text-align: center;
+    }
   }
 `;
 
@@ -69,7 +89,7 @@ const Board = ({ toDos, boardId }: BoardInterface) => {
     setToDos((allBoards) => {
       return {
         ...allBoards,
-        [boardId]: [newToDo, ...allBoards[boardId]],
+        [boardId]: [...allBoards[boardId], newToDo],
       };
     });
     setValue("toDo", "");
@@ -78,13 +98,7 @@ const Board = ({ toDos, boardId }: BoardInterface) => {
   return (
     <Wrapper>
       <Title>{boardId}</Title>
-      <Form onSubmit={handleSubmit(onValid)}>
-        <input
-          {...register("toDo", { required: true })}
-          type="text"
-          placeholder={`Add task on ${boardId}`}
-        />
-      </Form>
+
       <Droppable droppableId={boardId}>
         {(magic, snapshot) => (
           <Area
@@ -105,6 +119,13 @@ const Board = ({ toDos, boardId }: BoardInterface) => {
           </Area>
         )}
       </Droppable>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <input
+          {...register("toDo", { required: true })}
+          type="text"
+          placeholder="Add a card"
+        />
+      </Form>
     </Wrapper>
   );
 };

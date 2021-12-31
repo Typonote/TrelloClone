@@ -1,19 +1,22 @@
 import { atom } from "recoil";
+import { loadedTodos } from "./localStorage";
 
 export interface TodoInterface {
   id: number;
   text: string;
 }
 
-interface ToDoStateInterface {
+export interface ToDoStateInterface {
   [key: string]: TodoInterface[];
 }
 
 export const toDoState = atom<ToDoStateInterface>({
   key: "toDo",
-  default: {
-    "To Do": [],
-    Doing: [],
-    Done: [],
-  },
+  default: loadedTodos()
+    ? loadedTodos()
+    : {
+        "To Do": [],
+        Doing: [],
+        Done: [],
+      },
 });
